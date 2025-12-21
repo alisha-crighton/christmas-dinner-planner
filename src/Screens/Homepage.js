@@ -45,6 +45,8 @@ function Homepage() {
     const [timeToEat, setTimeToEat] = React.useState([{ id: 1, dinnerTime: '12:00' }])
     const [tasksList, setTasksList] = React.useState([]);
     const [foodAllItems, setFoodAllItems] = React.useState([]);
+    const location = useLocation();
+
 
     const fetchDinnerTime = () => {
         fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
@@ -76,7 +78,7 @@ function Homepage() {
         fetchDinnerTime();
         fetchTaskList();
         fetchFoodItems();
-    }), [];
+    }, []);
 
     React.useEffect(() => {
     if (location.state?.refresh) {
@@ -87,9 +89,6 @@ function Homepage() {
     const refreshTasks = () => {
     fetchTaskList();
     };
-
-    const location = useLocation();
-
 
     const handleTaskDone = (item) => {
 

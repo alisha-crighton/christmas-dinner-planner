@@ -55,7 +55,7 @@ function EditItem() {
     const handleSaveEditFood = async () => {
         setTitleExists(false);
         setNoTitle(false);
-    if (newPrep === item.prepTime && newBoil === item.boilTime && newCook === item.cookTime && newTitle === originalTitle) {
+    if (newPrep === item.prepTime && newBoil === item.boilTime && newCook === item.cookTime && newTitle.toLowerCase() === originalTitle.toLowerCase()) {
         navigate(previousScreen);
         return;
     }

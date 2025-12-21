@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
+*{
+    /* box-sizing: border-box; */
+}
+
+.top-bar{
+    background-color: palevioletred;
+    height:50px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    color: black;
+}
+
+.homepage{
+    background-color: palevioletred;
+    min-height:100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    font-family: 'Handlee';
+    font-size: 18px;
+}
+
+.notepad{
+    background-color: white;
+    /* box-shadow: 5px 5px 10px rgb(210, 168, 111); */
+    box-shadow: 7px 7px 10px rgb(223, 165, 184);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* border-radius: 5%; */
+}
+
+.notepad-title{
+    padding: 10px;
+    text-shadow: 1px solid red;
+    font-size: 22px;    
+    align-items: center;
+    width: 320px;                    /* match item width */
+    text-align: center;               
+    border-bottom: 1px solid lightgrey;      
+}
+
+.notepad-item{
+    border-bottom: 1px solid lightgrey;
+    width: 300px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    padding: 5px 20px;
+}
+
+.notepad-footer{
+    width: 300px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    padding: 5px 20px;
+    margin-top: 5px;
+}
+
+.notepad-holepunch{
+    background-color: palevioletred;
+    box-shadow: -3px -3px 7px rgb(223, 165, 184);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.notepad-row{
+    justify-content: center;
+    display: flex;
+    width: 350px;
+    gap: 30px;
+    padding-bottom: 10px;
+}
+
+.button-row{
+    justify-content: space-between;
+    display: flex;
+    width: 360px;
+}
+
+.accordion-style {
+    margin: 0px;
+    font-family: 'Handlee';
+    font-size: 18px;
+    align-items: left;
+    justify-content: center;
+}
+
+.accordion-title {
+    font-family: 'Handlee';
+    font-size: 18px;
+    align-items: left;
+    justify-content: center;
+}
+
+.add-tasks {
+    color:'grey'; 
+    border-color: 'white'; 
+    margin-top:10;
+    margin-left:55;
+    text-decoration: "none";
+    display: 'flex';
+    align-items: 'flex-center';
+    font-family: 'Handlee';
+    font-size:"18px";
+    justify-content:'flex-start';
+    width:'100%'
+}

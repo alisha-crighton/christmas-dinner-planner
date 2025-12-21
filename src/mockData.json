@@ -1,0 +1,46 @@
+taskList = [
+    {
+        "timeStamp": "14:25", 
+        "action": "Make gravy"
+    }
+
+]
+
+foodItems = [
+    {
+        "title": "Chicken",
+        "prepTime": 15, 
+        "boilTime" : 0,
+        "cookTime": 100, 
+        "prepBefore": false
+    },
+    
+    {
+        "title": "Roast potatoes", 
+        "prepTime": 10, 
+        "boilTime": 10,
+        "cookTime": 62,
+        "prepBefore": false
+
+    }, 
+
+    {
+        "title": "Pigs in blankets", 
+        "prepTime": 5, 
+        "boilTime": 0,
+        "cookTime": 53,
+        "prepBefore": false
+
+    }, 
+
+    {
+        "title": "Vegetables", 
+        "prepTime": 10, 
+        "boilTime": 10,
+        "cookTime": 5,
+        "prepBefore": true
+
+    }
+
+
+]

@@ -1,0 +1,110 @@
+import '../Homepage.css';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Button from '@mui/material/Button'
+import {useLocation, useNavigate} from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import * as React from 'react';
+import TimeInput from './TimeComponent.js';
+
+
+function EditDinnerTime() {
+
+    const navigate = useNavigate()
+    const handleClick = () => {
+        navigate('/');
+    }
+    
+    const location = useLocation();
+    
+    const [newTimeStamp, setNewTimeStamp] = React.useState(location.state.timeStamp)
+    const [newAction, setNewAction] = React.useState(location.state.action)
+
+    const handleSaveEditTask = () => {
+
+    let timeStampInput = newTimeStamp
+    if (newTimeStamp.split(":")[0].length === 1){
+        timeStampInput = "0" + newTimeStamp
+    }
+
+    const editTask = {
+        id: location.state.id,
+        timeStamp: timeStampInput,
+        action: newAction, 
+        isTask : true
+    };
+    
+    fetch('http://localhost:3002/edit_task', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editTask)
+    })
+    // handle response here 
+    .then(res =>res.json())
+    .then(data => console.log('Updated task : ', data))
+    .catch(err => console.error ('Error with updating task :', err));
+    navigate('/')
+    };
+
+    const handleDeleteTask = () => {
+        const id = location.state.id;
+        fetch(`http://localhost:3002/delete_task/${id}`, {
+            method: "DELETE",
+        })
+        .then(res => res.json())
+        .catch(err => console.error('Problem with deleting task', err));
+        navigate('/')
+
+    };
+
+  return (
+    <div className="homepage" >
+        <div className = "button-row">
+        <Button style={{marginTop:40, display: "flex", alignItems: "center", color:'white'}} 
+        onClick={handleClick}
+        ><ArrowBackIcon/> Back </Button>
+        </div>
+        <div className = "notepad" style={{height:700, width:350, marginTop:30}}>
+            <div className = "notepad-row">
+            <div className = "notepad-holepunch"/> 
+            <div className = "notepad-holepunch"/> 
+            <div className = "notepad-holepunch"/> 
+            <div className = "notepad-holepunch"/> 
+            <div className = "notepad-holepunch"/>           
+            <div className = "notepad-holepunch"/> 
+            <div className = "notepad-holepunch"/> 
+            </div>
+
+            <div className = "notepad-title" style={{fontWeight: 'bold'}}>
+                Edit Task <br/>
+            </div>
+
+            <div className = "notepad-item" style={{fontWeight: 'bold'}}>
+                <TextField  placeholder={location.state.action}  variant="standard" 
+                margin = "none" style={{ paddingLeft:0, width:'80%'}} slotProps={{ input:{disableUnderline:true, sx:{fontFamily: 'Handlee', fontSize:"18px"}}}}
+                value = {newAction}
+                onChange = {(newAction) => setNewAction(newAction.target.value)}
+                /> 
+                <br/> 
+            </div>
+
+            <div className = "notepad-item">
+               <span style={{fontWeight: 'bold', paddingRight:10, marginLeft:'30px'}}> Time: </span> 
+               <TimeInput placeholder = {location.state.timeStamp} newValue = {newTimeStamp} setNewValue = {setNewTimeStamp} />
+
+            </div>
+
+            <div style={{display:'flex', justifyContent:'space-between', width:'80%', marginTop:'10px'}}>
+                <Button style={{fontFamily:'Handlee', color:'grey'}} 
+                onClick= { () => {handleDeleteTask()}}
+                > 
+                Delete </Button> 
+                <Button style={{fontFamily:'Handlee', color:'grey'}}
+                onClick = {handleSaveEditTask}
+                > Save </Button>
+            </div>
+        </div>
+    </div>
+  );
+}
+
+export default EditDinnerTime;

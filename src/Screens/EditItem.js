@@ -63,7 +63,7 @@ function EditItem() {
         setNoTitle(true);
         return;
     }
-    if (foodAllItems.some(item => item.title === newTitle.trim().toLowerCase()) && newTitle !== originalTitle) {
+    if (foodAllItems.some(item => item.title === newTitle.trim().toLowerCase()) && newTitle.toLowerCase() !== originalTitle.toLowerCase()) {
         setTitleExists(true);
         setRepeatTitle(newTitle);
         return;

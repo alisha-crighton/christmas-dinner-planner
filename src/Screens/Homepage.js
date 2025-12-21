@@ -60,7 +60,8 @@ function Homepage() {
         fetch('https://christmas-dinner-planner.onrender.com/task_list')
             .then(res => res.json())
             .then(data => {
-                setTasksList(data.sort((a, b) => (Number(a.timeStamp) < Number(b.timeStamp)) ? 1 : ((Number(b.timeStamp) < Number(a.timeStamp)) ? -1 : 0)))
+                const sortedTasks = [...data].sort((a, b) => (Number(a.timeStamp) < Number(b.timeStamp)) ? 1 : ((Number(b.timeStamp) < Number(a.timeStamp)) ? -1 : 0));
+                setTasksList(sortedTasks)
             })
             .catch(err => console.error(err));
     };

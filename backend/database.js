@@ -30,7 +30,7 @@ db.serialize(() => {
     )
   `);
   db.run(`
-    INSERT INTO dinner_time (id, dinnerTime)
+    INSERT OR IGNORE INTO dinner_time (id, dinnerTime)
     VALUES (1, '12:00')
     `
   );

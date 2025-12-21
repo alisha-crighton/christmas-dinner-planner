@@ -303,5 +303,5 @@ app.get('/food_items', (req, res) => {
 
 
 // Start server
-const PORT = 3002;
+const PORT = 3002 || process.env.PORT;
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

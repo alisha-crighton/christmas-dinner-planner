@@ -76,7 +76,13 @@ function Homepage() {
         fetchDinnerTime();
         fetchTaskList();
         fetchFoodItems();
-    });
+    }), [];
+
+    React.useEffect(() => {
+    if (location.state?.refresh) {
+        fetchTaskList();
+    }
+}, [location.state]);
 
     const refreshTasks = () => {
     fetchTaskList();

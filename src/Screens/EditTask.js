@@ -54,7 +54,7 @@ function EditTask() {
     .then(data => {
         console.log('Updated task : ', data);
         location.state.refreshTasks();
-        navigate('/');
+        navigate('/', {state: {refresh:true}});
     })
     .catch(err => console.error ('Error with updating task :', err));
     };
@@ -67,7 +67,7 @@ function EditTask() {
         .then(res => res.json())
         .then (data => {
             location.state.refreshTasks();
-            navigate('/')
+            navigate('/', {state: {refresh: true}})
         })
         .catch(err => console.error('Problem with deleting task', err));
 

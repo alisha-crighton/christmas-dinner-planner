@@ -53,7 +53,7 @@ function EditTask() {
     .then(res =>res.json())
     .then(data => {
         console.log('Updated task : ', data);
-        location.state.refreshTasks();
+        // location.state.refreshTasks();
         navigate('/', {state: {refresh:true}});
     })
     .catch(err => console.error ('Error with updating task :', err));

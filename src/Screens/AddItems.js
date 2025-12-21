@@ -24,27 +24,34 @@ function AddItems() {
     const [repeatTitle, setRepeatTitle] = React.useState('');
     
         
-    React.useEffect(() => {
+    const fetchFoodItems = () => {
         fetch('https://christmas-dinner-planner.onrender.com/food_items')
         .then(res => res.json())
         .then(food => setFoodAllItems(food))
         .catch(err => console.error(err));
-        }, []);
+    };
 
-    React.useEffect (() => {
+    const fetchDinnerTime = () => {
             fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
             .then(res => res.json())
             .then (data =>{setTimeToEat (data)})
             .catch(err => console.error(err));
-        }, []);
+    };
+
+    React.useState(() => {
+        fetchFoodItems();
+        fetchDinnerTime();
+    }, []);
 
     const handleAddItem = () => {
         setTitleExists(false);
         setNoTitle(false);
+
     if (!newTitle.trim()) {
         setNoTitle(true);
         return;
     }
+
     if (foodAllItems.some(item => item.title === newTitle.trim().toLowerCase())) {
         setTitleExists(true);
         setRepeatTitle(newTitle);
@@ -68,6 +75,7 @@ function AddItems() {
     .then(res =>res.json())
     .then(data => console.log('Added item: ', data))
     .catch(err => console.error ('Error with adding task :', err));
+    fetchFoodItems()
     navigate('/AllItems')
 
         const dinnerTimestamp = new Date("December 25, 2025 " + timeToEat[0].dinnerTime).getTime();

@@ -44,16 +44,16 @@ function Homepage() {
 
     const [timeToEat, setTimeToEat] = React.useState([{ id: 1, dinnerTime: '12:00' }])
     const [tasksList, setTasksList] = React.useState([]);
-    // const [clearClick, setClearClick] = React.useState(false);
+    const [foodAllItems, setFoodAllItems] = React.useState([]);
 
-    React.useEffect(() => {
+    const fetchDinnerTime = () => {
         fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
             .then(res => res.json())
             .then(data => { setTimeToEat(data) })
             .catch(err => console.error(err));
-    }, []);
+    };
 
-    React.useEffect(() => {
+    const fetchTaskList = () => {
 
         fetch('https://christmas-dinner-planner.onrender.com/task_list')
             .then(res => res.json())
@@ -61,17 +61,23 @@ function Homepage() {
                 setTasksList(data.sort((a, b) => (Number(a.timeStamp) < Number(b.timeStamp)) ? 1 : ((Number(b.timeStamp) < Number(a.timeStamp)) ? -1 : 0)))
             })
             .catch(err => console.error(err));
-    }, []);
+    };
 
 
-    const [foodAllItems, setFoodAllItems] = React.useState([]);
-
-    React.useEffect(() => {
+    const fetchFoodItems = () => {
         fetch('https://christmas-dinner-planner.onrender.com/food_items')
             .then(res => res.json())
             .then(food => setFoodAllItems(food))
             .catch(err => console.error(err));
-    }, []);
+    };
+
+
+    React.useEffect (() => {
+        fetchDinnerTime();
+        fetchTaskList();
+        fetchFoodItems();
+    })
+
 
     const location = useLocation();
 
@@ -101,6 +107,7 @@ function Homepage() {
             .then(res => res.json())
             .then(data => console.log('Updated task : ', data))
             .catch(err => console.error('Error with updating task :', err));
+            fetchTaskList();
     };
 
     return (

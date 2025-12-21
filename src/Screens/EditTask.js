@@ -13,8 +13,8 @@ function EditTask() {
     const navigate = useNavigate()
     const location = useLocation();
 
-    const [newTimeStamp, setNewTimeStamp] = React.useState(location.state.timeStamp)
-    const [newAction, setNewAction] = React.useState(location.state.action)
+    const [newTimeStamp, setNewTimeStamp] = React.useState(location.state.task.timeStamp)
+    const [newAction, setNewAction] = React.useState(location.state.task.action)
     const [emptyTitle, setEmptyTitle] = React.useState(false)
     const [emptyTime, setEmptyTime] = React.useState(false)
 
@@ -36,11 +36,11 @@ function EditTask() {
     }
 
     const editTask = {
-        id: location.state.id,
+        id: location.state.task.id,
         timeStamp: newTimeStamp,
         action: newAction.charAt(0).toUpperCase() + newAction.slice(1).toLowerCase(), 
         isTask : true,
-        isDone: location.state.isDone, 
+        isDone: location.state.task.isDone, 
         item: null
     };
     
@@ -57,12 +57,13 @@ function EditTask() {
     };
 
     const handleDeleteTask = () => {
-        const id = location.state.id;
+        const id = location.state.task.id;
         fetch(`https://christmas-dinner-planner.onrender.com/delete_task/${id}`, {
             method: "DELETE",
         })
         .then(res => res.json())
         .catch(err => console.error('Problem with deleting task', err));
+        location.state.refreshTasks.refreshTasks();
         navigate('/')
 
     };
@@ -101,7 +102,7 @@ function EditTask() {
             </div>
 
             <div className = "notepad-item" style={{fontWeight: 'bold', color:'#c62833'}}>
-                <TextField  placeholder={location.state.action}  variant="standard" multiline
+                <TextField  placeholder={location.state.task.action}  variant="standard" multiline
                 margin = "none" style={{ paddingLeft:0, width:'100%'}} slotProps={{ input:{disableUnderline:true, sx:{fontFamily: 'Handlee', fontSize:"18px", color:'#c62833'}}}}
                 value = {newAction}
                 onChange = {(newAction) => setNewAction(newAction.target.value)}
@@ -111,16 +112,8 @@ function EditTask() {
 
             <div className = "notepad-item" style={{color:'#1f654c'}}>
                <span style={{fontWeight: 'bold', paddingRight:10, marginLeft:'30px'}}> Time: </span> 
-               {/* <TextField  placeholder={location.state.timeStamp} variant="standard" 
-               margin = "none" style={{color:"grey", paddingLeft:0, width:'11%'}} slotProps={{ input:{disableUnderline:true, sx:{fontFamily: 'Handlee', fontSize:"18px", color:'#1f654c'}}}}
-                value = {newTimeStamp}
-                onChange = {(newTimeInput) => {
-                    if (/^\d*$/.test(newTimeInput.target.value)) {
-                        setNewTimeStamp(newTimeInput.target.value);
-                    }}}
-                />  */}
                 <MinuteInput
-               placeholder = {location.state.timeStamp}
+               placeholder = {location.state.task.timeStamp}
                newValue = {newTimeStamp}
                setNewValue = {setNewTimeStamp}
                colour = {'#1f654c'}

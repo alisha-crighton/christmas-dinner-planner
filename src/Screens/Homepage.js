@@ -76,8 +76,11 @@ function Homepage() {
         fetchDinnerTime();
         fetchTaskList();
         fetchFoodItems();
-    })
+    });
 
+    const refreshTasks = () => {
+    fetchTaskList();
+    };
 
     const location = useLocation();
 
@@ -146,7 +149,7 @@ function Homepage() {
                                         handleOnClick={() => handleTaskDone(item)}
                                         text={taskTime(timeToEat[0].dinnerTime, item.timeStamp)}
                                     />
-                                    <Link to={'/EditTask'} state={item} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={'/EditTask'} state={{task:item, refreshTasks:refreshTasks}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>

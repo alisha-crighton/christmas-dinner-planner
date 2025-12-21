@@ -200,14 +200,9 @@ function EditItem() {
         })
         .then(res => res.json())
         .catch(err => console.error('Problem with deleting food item', err));
-
-        if (previousScreen === '/') {
-            navigate('/');
-        }
-        if (previousScreen === '/AllItems') {
-            navigate('/AllItems');
-        }
-    };
+        fetchFoodItems();
+        navigate(previousScreen)
+    }
     
   return (
     <div className="homepage" >

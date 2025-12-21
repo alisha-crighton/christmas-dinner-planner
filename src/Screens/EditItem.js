@@ -29,19 +29,23 @@ function EditItem() {
     const originalTitle = item.title;
     
     
-        React.useEffect (() => {
+        const fetchDinnerTime = () => {
                 fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
                 .then(res => res.json())
                 .then (data =>{setTimeToEat (data)})
                 .catch(err => console.error(err));
-            }, []);
+            };
 
-        React.useEffect(() => {
+        const fetchFoodItems = () => {
                 fetch('https://christmas-dinner-planner.onrender.com/food_items')
                 .then(res => res.json())
                 .then(food => setFoodAllItems(food))
                 .catch(err => console.error(err));
-                }, []);
+                };
+        React.useEffect(() => {
+            fetchDinnerTime();
+            fetchFoodItems();
+        })
 
     const dinnerTimestamp = new Date("December 25, 2025 " + timeToEat[0].dinnerTime).getTime();
         let dinnerTimeMinutes = (new Date (dinnerTimestamp)).getMinutes();
@@ -83,6 +87,8 @@ function EditItem() {
     .then(res =>res.json())
     .then(data => console.log('Updated item : ', data))
     .catch(err => console.error ('Error with adding task :', err));
+    fetchFoodItems();
+
 
     // Delete corresponding tasks
     const itemDel = item.title;

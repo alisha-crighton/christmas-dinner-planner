@@ -63,7 +63,7 @@ function EditItem() {
         setNoTitle(true);
         return;
     }
-    if (foodAllItems.some(item => item.title === newTitle.trim().toLowerCase()) && newTitle.toLowerCase() !== originalTitle.toLowerCase()) {
+    if (foodAllItems.some(item => item.title.trim().toLowerCase() === newTitle.trim().toLowerCase()) && newTitle.trim().toLowerCase() !== originalTitle.trim().toLowerCase()) {
         setTitleExists(true);
         setRepeatTitle(newTitle);
         return;
@@ -105,6 +105,7 @@ function EditItem() {
 
     // Remake corresponding tasks
 
+    const tasksToAdd = [];
     let cookStartTime = new Date(dinnerTimestamp - (editFoodItem.cookTime*60*1000))
             let boilStartTime = new Date(dinnerTimestamp - ((Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime))*60*1000))
             let prepStartTime = new Date(dinnerTimestamp - ((Number(editFoodItem.cookTime)+ Number(editFoodItem.boilTime) + Number(editFoodItem.prepTime))*60*1000))
@@ -130,54 +131,84 @@ function EditItem() {
     
             if (Number(editFoodItem.cookTime) !== 0)     
         {
-            fetch('https://christmas-dinner-planner.onrender.com/add_task', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime),
+            tasksToAdd.push(
+                {"timeStamp": Number(editFoodItem.cookTime),
                     "action": editFoodItem.title.charAt(0).toUpperCase() + editFoodItem.title.slice(1).toLowerCase() + " into oven", 
                     "isTask" : false, 
                     "isDone" : false, 
-                    "item": editFoodItem.title})
-            })
-            // handle response here 
-            .then(res =>res.json())
-            .then(data => {
-                console.log('Added item: ', data);
-            })
-            .catch(err => console.error ('Error with adding task :', err));
+                    "item": editFoodItem.title
+                });
+            // fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime),
+            //         "action": editFoodItem.title.charAt(0).toUpperCase() + editFoodItem.title.slice(1).toLowerCase() + " into oven", 
+            //         "isTask" : false, 
+            //         "isDone" : false, 
+            //         "item": editFoodItem.title})
+            // })
+            // // handle response here 
+            // .then(res =>res.json())
+            // .then(data => {
+            //     console.log('Added item: ', data);
+            // })
+            // .catch(err => console.error ('Error with adding task :', err));
         }
             if (Number(editFoodItem.boilTime) !== 0) {
-                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime), 
-                    "action": "Boil " + editFoodItem.title, 
+            //      fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime), 
+            //         "action": "Boil " + editFoodItem.title, 
+            //         "isTask" : false, 
+            //         "isDone" : false, 
+            //         "item": editFoodItem.title})
+            // })
+            // // handle response here 
+            // .then(res =>res.json())
+            // .then(data => console.log('Added item: ', data))
+            // .catch(err => console.error ('Error with adding task :', err));
+            tasksToAdd.push(
+                {"timeStamp": Number(editFoodItem.boilTime),
+                    "action": "Boil " + editFoodItem.title,
                     "isTask" : false, 
                     "isDone" : false, 
-                    "item": editFoodItem.title})
-            })
-            // handle response here 
-            .then(res =>res.json())
-            .then(data => console.log('Added item: ', data))
-            .catch(err => console.error ('Error with adding task :', err));
+                    "item": editFoodItem.title
+                });
             }
             
             if (Number(editFoodItem.prepTime) !== 0) {
-                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime) + Number(editFoodItem.prepTime),
-                    "action": "Prep " + editFoodItem.title, 
+            //      fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime) + Number(editFoodItem.prepTime),
+            //         "action": "Prep " + editFoodItem.title, 
+            //         "isTask" : false, 
+            //         "isDone" : false, 
+            //         "item": editFoodItem.title})
+            // })
+            // // handle response here 
+            // .then(res =>res.json())
+            // .then(data => console.log('Added item: ', data))
+            // .catch(err => console.error ('Error with adding task :', err));
+            tasksToAdd.push(
+                {"timeStamp": Number(editFoodItem.prepTime),
+                    "action": "Prep " + editFoodItem.title,
                     "isTask" : false, 
                     "isDone" : false, 
-                    "item": editFoodItem.title})
-            })
-            // handle response here 
-            .then(res =>res.json())
-            .then(data => console.log('Added item: ', data))
-            .catch(err => console.error ('Error with adding task :', err));
-            }
+                    "item": editFoodItem.title
+                });
+        }
 
+        for (const task in tasksToAdd) {
+            await fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(task)
+            })
+            .then(res=>res.json());
+        }
+        location.state.refreshTasks();
         navigate(previousScreen, {state: {refresh: true}});
 
     };

@@ -154,7 +154,7 @@ function Homepage() {
                                         handleOnClick={() => handleTaskDone(item)}
                                         text={taskTime(timeToEat[0].dinnerTime, item.timeStamp)}
                                     />
-                                    <Link to={'/EditTask'} state={{task:item, refreshTasks:refreshTasks}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={'/EditTask'} state={{task:item}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>
@@ -168,7 +168,7 @@ function Homepage() {
 
                                     />
 
-                                    <Link to={'/EditItem'} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item), refreshTasks:refreshTasks }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={'/EditItem'} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item) }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>

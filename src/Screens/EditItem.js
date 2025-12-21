@@ -30,14 +30,14 @@ function EditItem() {
     
     
         React.useEffect (() => {
-                fetch('http://localhost:3002/dinner_time')
+                fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
                 .then(res => res.json())
                 .then (data =>{setTimeToEat (data)})
                 .catch(err => console.error(err));
             }, []);
 
         React.useEffect(() => {
-                fetch('http://localhost:3002/food_items')
+                fetch('https://christmas-dinner-planner.onrender.com/food_items')
                 .then(res => res.json())
                 .then(food => setFoodAllItems(food))
                 .catch(err => console.error(err));
@@ -74,7 +74,7 @@ function EditItem() {
         prepBefore: item.prepBefore
     };
     
-    fetch('http://localhost:3002/edit_item', {
+    fetch('https://christmas-dinner-planner.onrender.com/edit_item', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editFoodItem)
@@ -86,7 +86,7 @@ function EditItem() {
 
     // Delete corresponding tasks
     const itemDel = item.title;
-        await fetch(`http://localhost:3002/delete_item_task/${encodeURIComponent(itemDel)}`, {
+        await fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}`, {
             method: "DELETE",
         })
         .then(res => res.json())
@@ -119,7 +119,7 @@ function EditItem() {
     
             if (Number(editFoodItem.cookTime) !== 0)     
         {
-            fetch('http://localhost:3002/add_task', {
+            fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime),
@@ -134,7 +134,7 @@ function EditItem() {
             .catch(err => console.error ('Error with adding task :', err));
         }
             if (Number(editFoodItem.boilTime) !== 0) {
-                 fetch('http://localhost:3002/add_task', {
+                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime), 
@@ -150,7 +150,7 @@ function EditItem() {
             }
             
             if (Number(editFoodItem.prepTime) !== 0) {
-                 fetch('http://localhost:3002/add_task', {
+                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": Number(editFoodItem.cookTime) + Number(editFoodItem.boilTime) + Number(editFoodItem.prepTime),
@@ -182,14 +182,14 @@ function EditItem() {
 
     const handleDeleteItem = () => {
         const id = item.id;
-        fetch(`http://localhost:3002/delete_item/${id}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_item/${id}`, {
             method: "DELETE",
         })
         .then(res => res.json())
         .catch(err => console.error('Problem with deleting food item', err));
 
         const itemDel = item.title;
-        fetch(`http://localhost:3002/delete_item_task/${encodeURIComponent(itemDel)}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}`, {
             method: "DELETE",
         })
         .then(res => res.json())

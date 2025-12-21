@@ -7,7 +7,7 @@ import AddItems from './Screens/AddItems.js'
 import EditTask from './Screens/EditTask.js'
 import EditDinnerTime from './Screens/EditDinnerTime.js'
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
 

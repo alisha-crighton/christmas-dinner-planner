@@ -15,7 +15,7 @@ function AllItems() {
     const [foodAllItems,setFoodAllItems] = React.useState([]);
     
         React.useEffect(() => {
-        fetch('http://localhost:3002/food_items')
+        fetch('https://christmas-dinner-planner.onrender.com/food_items')
             .then(res => res.json())
             .then(food => {
                 const foodList = [...foodItems, ...food];

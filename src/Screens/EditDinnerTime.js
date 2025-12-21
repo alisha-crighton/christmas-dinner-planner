@@ -32,7 +32,7 @@ function EditDinnerTime() {
         dinnerTime: timeStampInput
     };
     
-    fetch('http://localhost:3002/dinner_time', {
+    fetch('https://christmas-dinner-planner.onrender.com/dinner_time', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editDinnerTime)

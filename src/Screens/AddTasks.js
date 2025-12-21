@@ -61,7 +61,7 @@ function AddTasks() {
         item: null
     };
     
-    fetch('http://localhost:3002/add_task', {
+    fetch('https://christmas-dinner-planner.onrender.com/add_task', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTaskItem)

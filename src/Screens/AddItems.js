@@ -25,14 +25,14 @@ function AddItems() {
     
         
     React.useEffect(() => {
-        fetch('http://localhost:3002/food_items')
+        fetch('https://christmas-dinner-planner.onrender.com/food_items')
         .then(res => res.json())
         .then(food => setFoodAllItems(food))
         .catch(err => console.error(err));
         }, []);
 
     React.useEffect (() => {
-            fetch('http://localhost:3002/dinner_time')
+            fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
             .then(res => res.json())
             .then (data =>{setTimeToEat (data)})
             .catch(err => console.error(err));
@@ -59,7 +59,7 @@ function AddItems() {
         prepBefore: true
     };
     
-    fetch('http://localhost:3002/add_item', {
+    fetch('https://christmas-dinner-planner.onrender.com/add_item', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newFoodItem)
@@ -77,7 +77,7 @@ function AddItems() {
 
             if (Number(newFoodItem.cookTime) !== 0)     
         {
-            fetch('http://localhost:3002/add_task', {
+            fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": newFoodItem.cookTime,
@@ -92,7 +92,7 @@ function AddItems() {
             .catch(err => console.error ('Error with adding task :', err));
         }
             if (Number(newFoodItem.boilTime) !== 0) {
-                 fetch('http://localhost:3002/add_task', {
+                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": Number(newFoodItem.cookTime) + Number(newFoodItem.boilTime),
@@ -108,7 +108,7 @@ function AddItems() {
             }
             
             if (Number(newFoodItem.prepTime) !== 0) {
-                 fetch('http://localhost:3002/add_task', {
+                 fetch('https://christmas-dinner-planner.onrender.com/add_task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({"timeStamp": Number(newFoodItem.cookTime) + Number(newFoodItem.boilTime) + Number(newFoodItem.prepTime),

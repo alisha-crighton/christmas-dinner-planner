@@ -47,7 +47,7 @@ function Homepage() {
     // const [clearClick, setClearClick] = React.useState(false);
 
     React.useEffect(() => {
-        fetch('http://localhost:3002/dinner_time')
+        fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
             .then(res => res.json())
             .then(data => { setTimeToEat(data) })
             .catch(err => console.error(err));
@@ -55,7 +55,7 @@ function Homepage() {
 
     React.useEffect(() => {
 
-        fetch('http://localhost:3002/task_list')
+        fetch('https://christmas-dinner-planner.onrender.com/task_list')
             .then(res => res.json())
             .then(data => {
                 setTasksList(data.sort((a, b) => (Number(a.timeStamp) < Number(b.timeStamp)) ? 1 : ((Number(b.timeStamp) < Number(a.timeStamp)) ? -1 : 0)))
@@ -67,7 +67,7 @@ function Homepage() {
     const [foodAllItems, setFoodAllItems] = React.useState([]);
 
     React.useEffect(() => {
-        fetch('http://localhost:3002/food_items')
+        fetch('https://christmas-dinner-planner.onrender.com/food_items')
             .then(res => res.json())
             .then(food => setFoodAllItems(food))
             .catch(err => console.error(err));
@@ -92,7 +92,7 @@ function Homepage() {
             )
         );
 
-        fetch('http://localhost:3002/edit_task/done', {
+        fetch('https://christmas-dinner-planner.onrender.com/edit_task/done', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskDone)

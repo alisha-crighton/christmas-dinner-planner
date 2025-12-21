@@ -44,7 +44,7 @@ function EditTask() {
         item: null
     };
     
-    fetch('http://localhost:3002/edit_task', {
+    fetch('https://christmas-dinner-planner.onrender.com/edit_task', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editTask)
@@ -58,7 +58,7 @@ function EditTask() {
 
     const handleDeleteTask = () => {
         const id = location.state.id;
-        fetch(`http://localhost:3002/delete_task/${id}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_task/${id}`, {
             method: "DELETE",
         })
         .then(res => res.json())

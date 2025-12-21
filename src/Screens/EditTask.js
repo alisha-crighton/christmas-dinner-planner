@@ -51,9 +51,12 @@ function EditTask() {
     })
     // handle response here 
     .then(res =>res.json())
-    .then(data => console.log('Updated task : ', data))
+    .then(data => {
+        console.log('Updated task : ', data);
+        location.state.refreshTasks();
+        navigate('/');
+    })
     .catch(err => console.error ('Error with updating task :', err));
-    navigate('/')
     };
 
     const handleDeleteTask = () => {
@@ -62,9 +65,11 @@ function EditTask() {
             method: "DELETE",
         })
         .then(res => res.json())
+        .then (data => {
+            location.state.refreshTasks();
+            navigate('/')
+        })
         .catch(err => console.error('Problem with deleting task', err));
-        location.state.refreshTasks.refreshTasks();
-        navigate('/')
 
     };
 

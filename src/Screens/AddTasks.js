@@ -66,6 +66,7 @@ function AddTasks() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTaskItem)
     })
+    
     // handle response here 
     .then(res =>res.json())
     .then(newTask => {

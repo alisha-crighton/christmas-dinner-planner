@@ -119,6 +119,8 @@ function Homepage() {
             fetchTaskList();
     };
 
+    console.log('tasks list is ', tasksList)
+
     return (
         <div className="homepage" >
             <div className="button-row" style={{ marginTop: 40 }}>
@@ -155,7 +157,7 @@ function Homepage() {
                                         handleOnClick={() => handleTaskDone(item)}
                                         text={taskTime(timeToEat[0].dinnerTime, item.timeStamp)}
                                     />
-                                    <Link to={'/EditTask'} state={{task:item}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={'/EditTask'} state={{task:item, refreshTasks:refreshTasks}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>

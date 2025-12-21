@@ -85,7 +85,9 @@ function EditItem() {
     })
     // handle response here 
     .then(res =>res.json())
-    .then(data => console.log('Updated item : ', data))
+    .then(data => {console.log('Updated item : ', data);
+        location.state.refreshTasks();
+    })
     .catch(err => console.error ('Error with adding task :', err));
     fetchFoodItems();
 
@@ -96,6 +98,9 @@ function EditItem() {
             method: "DELETE",
         })
         .then(res => res.json())
+        .then (data => {
+            console.log('Deleted task: ', data);
+        })
         .catch(err => console.error('Problem with deleting food item', err));
 
     // Remake corresponding tasks
@@ -136,7 +141,9 @@ function EditItem() {
             })
             // handle response here 
             .then(res =>res.json())
-            .then(data => console.log('Added item: ', data))
+            .then(data => {
+                console.log('Added item: ', data);
+            })
             .catch(err => console.error ('Error with adding task :', err));
         }
             if (Number(editFoodItem.boilTime) !== 0) {
@@ -171,7 +178,7 @@ function EditItem() {
             .catch(err => console.error ('Error with adding task :', err));
             }
 
-        navigate(previousScreen);
+        navigate(previousScreen, {state: {refresh: true}});
 
     };
 
@@ -199,9 +206,12 @@ function EditItem() {
             method: "DELETE",
         })
         .then(res => res.json())
+        .then (data => {
+            console.log('Deleted item: ', data);
+            fetchFoodItems();
+            navigate(previousScreen, {state: {refresh: true}})
+        })
         .catch(err => console.error('Problem with deleting food item', err));
-        fetchFoodItems();
-        navigate(previousScreen)
     }
     
   return (

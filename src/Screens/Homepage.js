@@ -169,7 +169,7 @@ function Homepage() {
 
                                     />
 
-                                    <Link to={'/EditItem'} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item) }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={'/EditItem'} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item), refreshTasks:refreshTasks }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>

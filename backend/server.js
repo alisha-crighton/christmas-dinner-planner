@@ -18,22 +18,47 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+async function resetTables() {
+  await pool.query(`
+    DROP TABLE IF EXISTS food_items;
+    DROP TABLE IF EXISTS task_list;
+    DROP TABLE IF EXISTS dinner_time;
+
+    CREATE TABLE dinner_time (
+      id SERIAL PRIMARY KEY,
+      dinnerTime TEXT
+    );
+
+    CREATE TABLE task_list (
+      id SERIAL PRIMARY KEY,
+      timeStamp TEXT,
+      action TEXT,
+      isTask BOOLEAN,
+      isDone BOOLEAN,
+      item TEXT
+    );
+
+    CREATE TABLE food_items (
+      id SERIAL PRIMARY KEY,
+      title TEXT,
+      prepTime INTEGER,
+      boilTime INTEGER,
+      cookTime INTEGER,
+      prepBefore INTEGER
+    );
+  `);
+}
+
+
 // At the top, after pool is defined
 async function createTablesIfNotExist() {
   try {
-
-    await pool.query(`
-      DROP TABLE IF EXISTS food_items;
-      DROP TABLE IF EXISTS task_list;
-      DROP TABLE IF EXISTS dinner_time;
-      `);
-
     await pool.query(`
       CREATE TABLE IF NOT EXISTS dinner_time (
         id SERIAL PRIMARY KEY,
         dinnerTime TEXT
       );
-      
+
       CREATE TABLE IF NOT EXISTS task_list (
         id SERIAL PRIMARY KEY,
         timeStamp TEXT,
@@ -46,10 +71,10 @@ async function createTablesIfNotExist() {
       CREATE TABLE IF NOT EXISTS food_items (
         id SERIAL PRIMARY KEY,
         title TEXT,
-        prepTime NUMBER,
-        boilTime NUMBER,
-        cookTime NUMBER,
-        prepBefore NUMBER
+        prepTime INTEGER,
+        boilTime INTEGER,
+        cookTime INTEGER,
+        prepBefore INTEGER
       );
     `);
     console.log("Tables checked/created successfully");
@@ -57,6 +82,8 @@ async function createTablesIfNotExist() {
     console.error("Error creating tables:", err);
   }
 }
+
+
 
 app.post('/seed-dinner-time', async (req, res) => {
   try {

@@ -210,7 +210,9 @@ function EditItem() {
             })
             .then(res=>res.json());
         }
+        if (location.state.refreshTasks) {
         location.state.refreshTasks();
+        }        
         navigate(previousScreen, {state: {refresh: true}});
 
     };

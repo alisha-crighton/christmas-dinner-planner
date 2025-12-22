@@ -171,7 +171,7 @@ function EditItem() {
             // .then(data => console.log('Added item: ', data))
             // .catch(err => console.error ('Error with adding task :', err));
             tasksToAdd.push(
-                {"timeStamp": Number(editFoodItem.boilTime),
+                {"timeStamp": Number(editFoodItem.boilTime) + Number(editFoodItem.cookTime),
                     "action": "Boil " + editFoodItem.title,
                     "isTask" : false, 
                     "isDone" : false, 
@@ -194,7 +194,7 @@ function EditItem() {
             // .then(data => console.log('Added item: ', data))
             // .catch(err => console.error ('Error with adding task :', err));
             tasksToAdd.push(
-                {"timeStamp": Number(editFoodItem.prepTime),
+                {"timeStamp": Number(editFoodItem.prepTime) + Number(editFoodItem.boilTime) + Number(editFoodItem.cookTime),
                     "action": "Prep " + editFoodItem.title,
                     "isTask" : false, 
                     "isDone" : false, 

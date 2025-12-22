@@ -11,6 +11,7 @@ import TimeButton from './TimeEditButton.js'
 
 
 function formatTime(timeStamp) {
+    if (!timeStamp) return '-';
 
     let formattedTime = timeStamp;
 

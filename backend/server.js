@@ -61,7 +61,7 @@ async function createTablesIfNotExist() {
 
       CREATE TABLE IF NOT EXISTS task_list (
         "id" SERIAL PRIMARY KEY,
-        "timeStamp" TEXT,
+        "timeStamp" INTEGER,
         "action" TEXT,
         "isTask" BOOLEAN,
         "isDone" BOOLEAN,
@@ -74,7 +74,7 @@ async function createTablesIfNotExist() {
         "prepTime" INTEGER,
         "boilTime" INTEGER,
         "cookTime" INTEGER,
-        "prepBefore" INTEGER
+        "prepBefore" BOOLEAN
       );
     `);
     console.log("Tables checked/created successfully");
@@ -88,7 +88,7 @@ async function createTablesIfNotExist() {
 app.post('/seed-dinner-time', async (req, res) => {
   try {
     const result = await pool.query(
-      `INSERT INTO dinner_time (dinnerTime) VALUES ($1) RETURNING *`,
+      `INSERT INTO dinner_time ("dinnerTime") VALUES ($1) RETURNING *`,
       ['18:00'] // initial dinner time, e.g., 6 PM
     );
     res.json({ message: 'Dinner time seeded', data: result.rows[0] });
@@ -130,7 +130,7 @@ app.put('/dinner_time', async (req, res) =>{
   }
 
   try {
-    const result = await pool.query(` UPDATE dinner_time SET dinnerTime = $1 WHERE id = $2 RETURNING *`, 
+    const result = await pool.query(` UPDATE dinner_time SET "dinnerTime" = $1 WHERE "id" = $2 RETURNING *`, 
       [dinnerTime, id]
     );
     if (result.rowCount === 0) {
@@ -153,7 +153,7 @@ app.post('/add_task', async (req, res) => {
 
   try {
     const result = await pool.query (
-      ` INSERT INTO task_list (timeStamp, action, isTask, isDone, item)
+      ` INSERT INTO task_list ("timeStamp", "action", "isTask", "isDone", "item")
     VALUES ($1, $2, $3, $4, $5) RETURNING *`, 
     [timeStamp, action, isTask, isDone, item]
     );
@@ -172,8 +172,8 @@ app.put('/edit_task', async(req, res) =>{
 
   try {
     const result = await pool.query(` UPDATE task_list
-  SET timeStamp = $1, action = $2, isTask = $3, isDone = $4, item = $5
-  WHERE id = $6 RETURNING *`, [timeStamp, action, isTask, isDone, item , id]);
+  SET "timeStamp" = $1, "action" = $2, "isTask" = $3, "isDone" = $4, "item" = $5
+  WHERE "id" = $6 RETURNING *`, [timeStamp, action, isTask, isDone, item , id]);
   if (result.rowCount === 0) {
     return res.status(404).json({error: "No task found with that ID"});
   }
@@ -193,8 +193,8 @@ app.put('/edit_task/done', async (req, res) =>{
 
   try {
     const result = await pool.query(`UPDATE task_list
-  SET action = $1, timeStamp = $2, isTask = $3, isDone = $4, item = $5
-  WHERE id = $6 RETURNING *`, [action, timeStamp, isTask, isDone, item, id]);
+  SET "action" = $1, "timeStamp" = $2, "isTask" = $3, "isDone" = $4, "item" = $5
+  WHERE "id" = $6 RETURNING *`, [action, timeStamp, isTask, isDone, item, id]);
   if (result.rowCount === 0){
     return res.status(404).json({error: "No task found with that ID"});
   }
@@ -213,7 +213,7 @@ app.delete('/delete_task/:id', async (req, res) => {
   }
 
   try {
-    const result = await pool.query ( `DELETE FROM task_list WHERE id = $1 RETURNING *`, [id]);
+    const result = await pool.query ( `DELETE FROM task_list WHERE "id" = $1 RETURNING *`, [id]);
     if (result.rowCount === 0){
       return res.status(404).json({ message: "ID doesnt match a task" });
     }
@@ -232,7 +232,7 @@ app.delete('/delete_item_task/:item', async (req, res) => {
   }
 
   try {
-    const result = await pool.query(`DELETE FROM task_list WHERE item = $1 RETURNING *`, [item]);
+    const result = await pool.query(`DELETE FROM task_list WHERE "item" = $1 RETURNING *`, [item]);
     if (result.rowCount === 0) {
       return res.status(404).json({deleted: result.rowCount, message: "Item doesn't match a task"});
     }
@@ -250,7 +250,7 @@ app.post('/add_item', async (req, res) =>{
   }
 
   try {
-    const result = await pool.query (`INSERT INTO food_items ( title, prepTime, boilTime, cookTime, prepBefore)
+    const result = await pool.query (`INSERT INTO food_items ( "title", "prepTime", "boilTime", "cookTime", "prepBefore")
       VALUES ( $1, $2, $3, $4, $5) RETURNING *`, [title, prepTime, boilTime, cookTime, prepBefore]);
     res.json(result.rows[0]);
   } catch(err) {
@@ -268,8 +268,8 @@ app.put('/edit_item', async (req, res) =>{
   }
 
   try{
-    const result = await pool.query(`UPDATE food_items SET title = $1, prepTime = $2, boilTime = $3, cookTime = $4, prepBefore = $5
-  WHERE id = $6 RETURNING *`, [title, prepTime, boilTime, cookTime, prepBefore, id]);
+    const result = await pool.query(`UPDATE food_items SET "title" = $1, "prepTime" = $2, "boilTime" = $3, "cookTime" = $4, "prepBefore" = $5
+  WHERE "id" = $6 RETURNING *`, [title, prepTime, boilTime, cookTime, prepBefore, id]);
   if (result.rowCount === 0) {
     return res.status(404).json({error: "No food item found with that ID"})
   }
@@ -288,7 +288,7 @@ app.delete('/delete_item/:id', async (req, res) => {
   }
 
   try {
-    const result = await pool.query (`DELETE FROM food_items WHERE id = $1 RETURNING *`, [id]);
+    const result = await pool.query (`DELETE FROM food_items WHERE "id" = $1 RETURNING *`, [id]);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "ID doesnt match a food item" });
     }

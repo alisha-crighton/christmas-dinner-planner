@@ -82,10 +82,8 @@ function Homepage() {
     }, []);
 
     React.useEffect(() => {
-    if (location.state?.refresh) {
         fetchTaskList();
-    }
-}, [location.state]);
+    }, [location.state]);
 
     const refreshTasks = () => {
     fetchTaskList();

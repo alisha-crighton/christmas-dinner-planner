@@ -5,9 +5,14 @@ const cors = require('cors');
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Render sets this for you
-  ssl: { rejectUnauthorized: false } // Required for Render PostgreSQL
+  host: process.env.PGHOST,
+  port: process.env.PGPORT || 5432,
+  database: process.env.PGDATABASE,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  ssl: { rejectUnauthorized: false }
 });
+
 
 const app = express();
 app.use(cors());
@@ -224,6 +229,16 @@ app.get('/food_items', async (req, res) => {
   }
 });
 
+
+app.get('/test-db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ dbTime: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database connection failed');
+  }
+});
 
 // Start server
 const PORT = process.env.PORT || 3002;

@@ -24,12 +24,12 @@ async function createTablesIfNotExist() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS dinner_time (
         id SERIAL PRIMARY KEY,
-        dinnerTime TIME
+        dinnerTime TEXT
       );
       
       CREATE TABLE IF NOT EXISTS task_list (
         id SERIAL PRIMARY KEY,
-        timeStamp TIMESTAMP,
+        timeStamp TEXT,
         action TEXT,
         isTask BOOLEAN,
         isDone BOOLEAN,
@@ -39,10 +39,10 @@ async function createTablesIfNotExist() {
       CREATE TABLE IF NOT EXISTS food_items (
         id SERIAL PRIMARY KEY,
         title TEXT,
-        prepTime INT,
-        boilTime INT,
-        cookTime INT,
-        prepBefore INT
+        prepTime NUMBER,
+        boilTime NUMBER,
+        cookTime NUMBER,
+        prepBefore NUMBER
       );
     `);
     console.log("Tables checked/created successfully");

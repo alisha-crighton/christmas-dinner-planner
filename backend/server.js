@@ -21,6 +21,13 @@ app.use(express.json());
 // At the top, after pool is defined
 async function createTablesIfNotExist() {
   try {
+
+    await pool.query(`
+      DROP TABLE IF EXISTS food_items;
+      DROP TABLE IF EXISTS task_list;
+      DROP TABLE IF EXISTS dinner_time;
+      `);
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS dinner_time (
         id SERIAL PRIMARY KEY,
@@ -58,6 +65,15 @@ app.post('/seed-dinner-time', async (req, res) => {
       ['18:00'] // initial dinner time, e.g., 6 PM
     );
     res.json({ message: 'Dinner time seeded', data: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/reset-tables', async (req, res) => {
+  try {
+    await resetTables();
+    res.json({ message: "Tables reset successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

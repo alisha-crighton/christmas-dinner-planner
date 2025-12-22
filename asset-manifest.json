@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/christmas-dinner-planner/static/css/main.485ad5eb.css",
-    "main.js": "/christmas-dinner-planner/static/js/main.9c1cc47d.js",
+    "main.js": "/christmas-dinner-planner/static/js/main.223c46da.js",
     "static/js/453.28ea342d.chunk.js": "/christmas-dinner-planner/static/js/453.28ea342d.chunk.js",
     "index.html": "/christmas-dinner-planner/index.html",
     "main.485ad5eb.css.map": "/christmas-dinner-planner/static/css/main.485ad5eb.css.map",
-    "main.9c1cc47d.js.map": "/christmas-dinner-planner/static/js/main.9c1cc47d.js.map",
+    "main.223c46da.js.map": "/christmas-dinner-planner/static/js/main.223c46da.js.map",
     "453.28ea342d.chunk.js.map": "/christmas-dinner-planner/static/js/453.28ea342d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.485ad5eb.css",
-    "static/js/main.9c1cc47d.js"
+    "static/js/main.223c46da.js"
   ]
 }

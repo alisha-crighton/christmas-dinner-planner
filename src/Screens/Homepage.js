@@ -166,7 +166,7 @@ function Homepage() {
                                     <TimeButton
                                         colour={index % 2 === 0 ? "#c62833" : "#1f654c"}
                                         handleOnClick={() => handleTaskDone(item)}
-                                        text={taskTime(timeToEat[0].dinnerTime, item.timeStamp)}
+                                        text={taskTime(timeToEat[0]?.dinnerTime || '12:00', item.timeStamp)}
 
                                     />
 

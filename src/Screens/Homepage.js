@@ -143,7 +143,7 @@ function Homepage() {
                     fontWeight: "bold", marginBottom: '0px',
                     display: "flex", justifyContent: "center", alignItems: "center", textDecoration: "none", color: '#4d0d19'
                 }}>
-                    Christmas Dinner for {formatTime(timeToEat[0]?.dinnerTime)}
+                    Christmas Dinner for {timeToEat[0].dinnerTime === undefined ? formatTime('12:00') : formatTime(timeToEat[0]?.dinnerTime)}
                 </Link>
 
                 {tasksList.length !== 0 ?

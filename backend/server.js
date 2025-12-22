@@ -18,6 +18,42 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// At the top, after pool is defined
+async function createTablesIfNotExist() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS dinner_time (
+        id SERIAL PRIMARY KEY,
+        dinnerTime TIME
+      );
+      
+      CREATE TABLE IF NOT EXISTS task_list (
+        id SERIAL PRIMARY KEY,
+        timeStamp TIMESTAMP,
+        action TEXT,
+        isTask BOOLEAN,
+        isDone BOOLEAN,
+        item TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS food_items (
+        id SERIAL PRIMARY KEY,
+        title TEXT,
+        prepTime INT,
+        boilTime INT,
+        cookTime INT,
+        prepBefore INT
+      );
+    `);
+    console.log("Tables checked/created successfully");
+  } catch (err) {
+    console.error("Error creating tables:", err);
+  }
+}
+
+// Call it once when server starts
+createTablesIfNotExist();
+
 // Get dinner time
 
 app.get('/dinner_time', async (req, res) => {

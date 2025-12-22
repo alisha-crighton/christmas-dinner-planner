@@ -41,10 +41,10 @@ async function resetTables() {
     CREATE TABLE food_items (
       id SERIAL PRIMARY KEY,
       title TEXT,
-      prepTime INTEGER,
-      boilTime INTEGER,
-      cookTime INTEGER,
-      prepBefore INTEGER
+      prepTime TEXT,
+      boilTime TEXT,
+      cookTime TEXT,
+      prepBefore BOOLEAN
     );
   `);
 }

@@ -39,9 +39,13 @@ function EditDinnerTime() {
     })
     // handle response here 
     .then(res =>res.json())
-    .then(data => console.log('Updated dinner time : ', data))
+    .then(data => {
+        console.log('Updated dinner time : ', data)
+        if (location.state.refreshTasks) {
+        location.state.refreshTasks();
+        }
+        navigate('/');})
     .catch(err => console.error ('Error with updating dinner time :', err));
-    navigate('/')
     };
 
     const handleCancel = () => {

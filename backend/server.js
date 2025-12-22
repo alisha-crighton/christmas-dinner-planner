@@ -25,26 +25,26 @@ async function resetTables() {
     DROP TABLE IF EXISTS dinner_time;
 
     CREATE TABLE dinner_time (
-      id SERIAL PRIMARY KEY,
-      dinnerTime TEXT
+      "id" SERIAL PRIMARY KEY,
+      "dinnerTime" TEXT
     );
 
     CREATE TABLE task_list (
-      id SERIAL PRIMARY KEY,
-      timeStamp INTEGER,
-      action TEXT,
-      isTask BOOLEAN,
-      isDone BOOLEAN,
-      item TEXT
+      "id" SERIAL PRIMARY KEY,
+      "timeStamp" INTEGER,
+      "action" TEXT,
+      "isTask" BOOLEAN,
+      "isDone" BOOLEAN,
+      "item" TEXT
     );
 
     CREATE TABLE food_items (
-      id SERIAL PRIMARY KEY,
-      title TEXT,
-      prepTime INTEGER,
-      boilTime INTEGER,
-      cookTime INTEGER,
-      prepBefore BOOLEAN
+      "id" SERIAL PRIMARY KEY,
+      "title" TEXT,
+      "prepTime" INTEGER,
+      "boilTime" INTEGER,
+      "cookTime" INTEGER,
+      "prepBefore" BOOLEAN
     );
   `);
 }
@@ -55,26 +55,26 @@ async function createTablesIfNotExist() {
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS dinner_time (
-        id SERIAL PRIMARY KEY,
-        dinnerTime TEXT
+        "id" SERIAL PRIMARY KEY,
+        "dinnerTime" TEXT
       );
 
       CREATE TABLE IF NOT EXISTS task_list (
-        id SERIAL PRIMARY KEY,
-        timeStamp TEXT,
-        action TEXT,
-        isTask BOOLEAN,
-        isDone BOOLEAN,
-        item TEXT
+        "id" SERIAL PRIMARY KEY,
+        "timeStamp" TEXT,
+        "action" TEXT,
+        "isTask" BOOLEAN,
+        "isDone" BOOLEAN,
+        "item" TEXT
       );
 
       CREATE TABLE IF NOT EXISTS food_items (
-        id SERIAL PRIMARY KEY,
-        title TEXT,
-        prepTime INTEGER,
-        boilTime INTEGER,
-        cookTime INTEGER,
-        prepBefore INTEGER
+        "id" SERIAL PRIMARY KEY,
+        "title" TEXT,
+        "prepTime" INTEGER,
+        "boilTime" INTEGER,
+        "cookTime" INTEGER,
+        "prepBefore" INTEGER
       );
     `);
     console.log("Tables checked/created successfully");

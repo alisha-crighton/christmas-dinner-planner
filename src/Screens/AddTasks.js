@@ -47,7 +47,7 @@ function AddTasks() {
         setEmptyTime(false);
         return;
     }
-    else if (emptyTime) {
+    else if (timeInput.toString().trim() === '') {
         setEmptyTitle(false);
         setEmptyTime(true);
         return;
@@ -70,7 +70,7 @@ function AddTasks() {
     // handle response here 
     .then(res =>res.json())
     .then(newTask => {
-        if (newTask?.timeStamp && newTask?.action){
+        if (newTask?.timeStamp!==undefined && newTask?.action){
         resetAddTask(); 
         navigate('/');
         } 

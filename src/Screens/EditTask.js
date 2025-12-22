@@ -37,7 +37,7 @@ function EditTask() {
 
     const editTask = {
         id: location.state.task.id,
-        timeStamp: newTimeStamp,
+        timeStamp: Number(newTimeStamp),
         action: newAction.charAt(0).toUpperCase() + newAction.slice(1).toLowerCase(), 
         isTask : true,
         isDone: location.state.task.isDone, 

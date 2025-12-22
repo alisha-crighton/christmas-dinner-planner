@@ -60,9 +60,9 @@ function AddItems() {
 
     const newFoodItem = {
         title: newTitle.trim().toLowerCase(),
-        prepTime: ( newPrep === ''  ? '0' : newPrep),
-        boilTime: ( newBoil === '' ? '0' : newBoil),
-        cookTime: ( newCook === '' ? '0' : newCook),
+        prepTime: ( newPrep === ''  ? 0 : Number(newPrep)),
+        boilTime: ( newBoil === '' ? 0 : Number(newBoil)),
+        cookTime: ( newCook === '' ? 0 : Number(newCook)),
         prepBefore: true
     };
     

@@ -31,7 +31,7 @@ async function resetTables() {
 
     CREATE TABLE task_list (
       id SERIAL PRIMARY KEY,
-      timeStamp TEXT,
+      timeStamp INTEGER,
       action TEXT,
       isTask BOOLEAN,
       isDone BOOLEAN,
@@ -41,9 +41,9 @@ async function resetTables() {
     CREATE TABLE food_items (
       id SERIAL PRIMARY KEY,
       title TEXT,
-      prepTime TEXT,
-      boilTime TEXT,
-      cookTime TEXT,
+      prepTime INTEGER,
+      boilTime INTEGER,
+      cookTime INTEGER,
       prepBefore BOOLEAN
     );
   `);

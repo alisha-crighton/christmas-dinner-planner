@@ -72,9 +72,9 @@ function EditItem() {
     const editFoodItem = {
         id: item.id,
         title: newTitle.trim().toLowerCase(),
-        prepTime: newPrep!=='' ? newPrep : 0,
-        boilTime: newBoil!=='' ? newBoil : 0,
-        cookTime: newCook!=='' ? newCook : 0,
+        prepTime: newPrep!=='' ? Number(newPrep) : 0,
+        boilTime: newBoil!=='' ? Number(newBoil) : 0,
+        cookTime: newCook!=='' ? Number(newCook) : 0,
         prepBefore: item.prepBefore
     };
     

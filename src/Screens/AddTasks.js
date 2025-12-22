@@ -54,7 +54,7 @@ function AddTasks() {
     }
     
     const newTaskItem = {
-        timeStamp: timeInput,
+        timeStamp: Number(timeInput),
         action: addTask.charAt(0).toUpperCase() + addTask.slice(1).toLowerCase(),
         isTask: true, 
         isDone: false,
@@ -66,7 +66,7 @@ function AddTasks() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTaskItem)
     })
-    
+
     // handle response here 
     .then(res =>res.json())
     .then(newTask => {

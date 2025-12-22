@@ -47,6 +47,14 @@ async function resetTables() {
       "prepBefore" BOOLEAN
     );
   `);
+  const result = await pool.query(`SELECT COUNT(*) FROM dinner_time`);
+    if (Number(result.rows[0].count) === 0) {
+      await pool.query(
+        `INSERT INTO dinner_time ("dinnerTime") VALUES ($1)`,
+        ['12:00'] // default dinner time
+      );
+      console.log('Default dinner time inserted');
+    }
 }
 
 
@@ -77,6 +85,15 @@ async function createTablesIfNotExist() {
         "prepBefore" BOOLEAN
       );
     `);
+    const result = await pool.query(`SELECT COUNT(*) FROM dinner_time`);
+    if (Number(result.rows[0].count) === 0) {
+      await pool.query(
+        `INSERT INTO dinner_time ("dinnerTime") VALUES ($1)`,
+        ['12:00'] // default dinner time
+      );
+      console.log('Default dinner time inserted');
+    }
+
     console.log("Tables checked/created successfully");
   } catch (err) {
     console.error("Error creating tables:", err);
@@ -85,17 +102,17 @@ async function createTablesIfNotExist() {
 
 
 
-app.post('/seed-dinner-time', async (req, res) => {
-  try {
-    const result = await pool.query(
-      `INSERT INTO dinner_time ("dinnerTime") VALUES ($1) RETURNING *`,
-      ['12:00'] // initial dinner time, e.g., 6 PM
-    );
-    res.json({ message: 'Dinner time seeded', data: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// app.post('/seed-dinner-time', async (req, res) => {
+//   try {
+//     const result = await pool.query(
+//       `INSERT INTO dinner_time ("dinnerTime") VALUES ($1) RETURNING *`,
+//       ['12:00'] // initial dinner time, e.g., 6 PM
+//     );
+//     res.json({ message: 'Dinner time seeded', data: result.rows[0] });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 app.post('/reset-tables', async (req, res) => {
   try {

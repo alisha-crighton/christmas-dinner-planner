@@ -12,7 +12,7 @@ function EditDinnerTime() {
     const navigate = useNavigate()
     
     const location = useLocation();
-    const dinnerTime = location.state[0].dinnerTime || '12:00';
+    const dinnerTime = location.state[0]?.dinnerTime || '12:00';
     
     const [newDinnerTime, setNewDinnerTime] = React.useState(dinnerTime)
     const [wrongTime, setWrongTime] = React.useState(false)

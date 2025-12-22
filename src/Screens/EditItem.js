@@ -45,7 +45,7 @@ function EditItem() {
         React.useEffect(() => {
             fetchDinnerTime();
             fetchFoodItems();
-        })
+        }, []);
 
     const dinnerTimestamp = new Date("December 25, 2025 " + timeToEat[0].dinnerTime).getTime();
         let dinnerTimeMinutes = (new Date (dinnerTimestamp)).getMinutes();
@@ -86,7 +86,9 @@ function EditItem() {
     // handle response here 
     .then(res =>res.json())
     .then(data => {console.log('Updated item : ', data);
+        if (location.state.refreshTasks) {
         location.state.refreshTasks();
+        }
     })
     .catch(err => console.error ('Error with adding task :', err));
     fetchFoodItems();

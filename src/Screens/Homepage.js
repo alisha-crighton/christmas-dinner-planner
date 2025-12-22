@@ -115,7 +115,7 @@ function Homepage() {
             .then(res => res.json())
             .then(data => console.log('Updated task : ', data))
             .catch(err => console.error('Error with updating task :', err));
-            fetchTaskList();
+            // fetchTaskList();
     };
 
     console.log('tasks list is ', tasksList)

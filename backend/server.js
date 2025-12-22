@@ -51,6 +51,18 @@ async function createTablesIfNotExist() {
   }
 }
 
+app.post('/seed-dinner-time', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `INSERT INTO dinner_time (dinnerTime) VALUES ($1) RETURNING *`,
+      ['18:00'] // initial dinner time, e.g., 6 PM
+    );
+    res.json({ message: 'Dinner time seeded', data: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Call it once when server starts
 createTablesIfNotExist();
 

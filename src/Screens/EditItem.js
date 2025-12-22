@@ -202,7 +202,7 @@ function EditItem() {
                 });
         }
 
-        for (const task in tasksToAdd) {
+        for (const task of tasksToAdd) {
             await fetch('https://christmas-dinner-planner.onrender.com/add_task', {
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' },

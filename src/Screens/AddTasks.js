@@ -47,7 +47,7 @@ function AddTasks() {
         setEmptyTime(false);
         return;
     }
-    else if (!timeInput.trim()) {
+    else if (!timeInput) {
         setEmptyTitle(false);
         setEmptyTime(true);
         return;

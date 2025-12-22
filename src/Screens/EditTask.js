@@ -29,7 +29,7 @@ function EditTask() {
         setEmptyTime(false);
         return;
     }
-    else if (!newTimeStamp.trim()) {
+    else if (!newTimeStamp) {
         setEmptyTitle(false);
         setEmptyTime(true);
         return;

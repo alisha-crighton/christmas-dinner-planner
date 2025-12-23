@@ -1,7 +1,7 @@
 import '../Homepage.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button'
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import * as React from 'react';
 import TimeInput from './TimeComponent.js';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 function EditDinnerTime() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const {username} = useParams();
     
     const location = useLocation();
     const dinnerTime = location.state[0]?.dinnerTime || '12:00';
@@ -32,7 +33,7 @@ function EditDinnerTime() {
         dinnerTime: timeStampInput
     };
     
-    fetch('https://christmas-dinner-planner.onrender.com/dinner_time', {
+    fetch(`https://christmas-dinner-planner.onrender.com/dinner_time/${username}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editDinnerTime)
@@ -44,7 +45,7 @@ function EditDinnerTime() {
         if (location.state.refreshTasks) {
         location.state.refreshTasks();
         }
-        navigate('/');})
+        navigate(`/${username}`);})
     .catch(err => console.error ('Error with updating dinner time :', err));
     };
 
@@ -53,13 +54,13 @@ function EditDinnerTime() {
             setNewDinnerTime(dinnerTime);
             setWrongTime(false);
         }
-        else (navigate('/'))
+        else (navigate(`/${username}`))
     };
 
   return (
     <div className="homepage" >
         <div className = "button-row">
-        <Link  to={'/'} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
+        <Link  to={`/${username}`} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
             <ArrowBackIcon sx={{color:"#4d0d19", paddingRight:'7px'}}/>
             Back 
         </Link>

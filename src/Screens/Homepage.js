@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 // import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom';
+import { Link , useParams} from 'react-router-dom';
 import TimeButton from './TimeEditButton.js'
 
 
@@ -47,10 +47,11 @@ function Homepage() {
     const [tasksList, setTasksList] = React.useState([]);
     const [foodAllItems, setFoodAllItems] = React.useState([]);
     const location = useLocation();
+    const{username} = useParams();
 
 
     const fetchDinnerTime = () => {
-        fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
+        fetch(`https://christmas-dinner-planner.onrender.com/dinner_time/${username}`)
             .then(res => res.json())
             .then(data => { setTimeToEat(data) })
             .catch(err => console.error(err));
@@ -58,7 +59,7 @@ function Homepage() {
 
     const fetchTaskList = () => {
 
-        fetch('https://christmas-dinner-planner.onrender.com/task_list')
+        fetch(`https://christmas-dinner-planner.onrender.com/task_list/${username}`)
             .then(res => res.json())
             .then(data => {
                 const sortedTasks = [...data].sort((a, b) => (Number(a.timeStamp) < Number(b.timeStamp)) ? 1 : ((Number(b.timeStamp) < Number(a.timeStamp)) ? -1 : 0));
@@ -69,7 +70,7 @@ function Homepage() {
 
 
     const fetchFoodItems = () => {
-        fetch('https://christmas-dinner-planner.onrender.com/food_items')
+        fetch(`https://christmas-dinner-planner.onrender.com/food_items/${username}`)
             .then(res => res.json())
             .then(food => setFoodAllItems(food))
             .catch(err => console.error(err));
@@ -80,7 +81,7 @@ function Homepage() {
         fetchDinnerTime();
         fetchTaskList();
         fetchFoodItems();
-    }, []);
+    }, [username]);
 
     React.useEffect(() => {
         fetchTaskList();
@@ -106,7 +107,7 @@ function Homepage() {
             )
         );
 
-        fetch('https://christmas-dinner-planner.onrender.com/edit_task/done', {
+        fetch(`https://christmas-dinner-planner.onrender.com/edit_task/done/${username}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskDone)
@@ -123,7 +124,7 @@ function Homepage() {
     return (
         <div className="homepage" >
             <div className="button-row" style={{ marginTop: 40 }}>
-                <Link to={'/AllItems'} style={{ color: '#4d0d19', borderColor: 'white', marginLeft: 15, textDecoration: "none", display: 'flex', alignItems: 'flex-center', fontFamily: 'Handlee', fontSize: "18px", justifyContent: 'flex-start', width: '100%' }}>
+                <Link to={`/${username}/AllItems`} style={{ color: '#4d0d19', borderColor: 'white', marginLeft: 15, textDecoration: "none", display: 'flex', alignItems: 'flex-center', fontFamily: 'Handlee', fontSize: "18px", justifyContent: 'flex-start', width: '100%' }}>
                     <FormatListBulletedIcon sx={{ color: "#4d0d19", paddingRight: '7px' }} />
                     Add food to your plate
                 </Link>
@@ -139,7 +140,7 @@ function Homepage() {
                     <div className="notepad-holepunch" />
                 </div>
 
-                <Link to={'/EditDinnerTime'} state={timeToEat} className="notepad-title" style={{
+                <Link to={`/${username}/EditDinnerTime`} state={timeToEat} className="notepad-title" style={{
                     fontWeight: "bold", marginBottom: '0px',
                     display: "flex", justifyContent: "center", alignItems: "center", textDecoration: "none", color: '#4d0d19'
                 }}>
@@ -156,7 +157,7 @@ function Homepage() {
                                         handleOnClick={() => handleTaskDone(item)}
                                         text={taskTime(timeToEat[0].dinnerTime, item.timeStamp)}
                                     />
-                                    <Link to={'/EditTask'} state={{task:item}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={`/${username}/EditTask`} state={{task:item}} style={{ minWidth: 0, textDecoration: item.isDone ? "line-through" : "none", color: index % 2 === 0 ? "#c62833" : "#1f654c", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>
@@ -170,7 +171,7 @@ function Homepage() {
 
                                     />
 
-                                    <Link to={'/EditItem'} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item) }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
+                                    <Link to={`/${username}/EditItem`} state={{ from: location.pathname, item: foodAllItems.find(food => food.title === item.item) }} style={{ minWidth: 0, color: index % 2 === 0 ? "#c62833" : "#1f654c", textDecoration: item.isDone ? "line-through" : "none", display: "flex", overflowWrap: "anywhere", wordBreak: "break-word", whiteSpace: "normal" }}>
                                         {item.action}
                                     </Link>
                                 </div>
@@ -190,7 +191,7 @@ function Homepage() {
                 }
 
 
-                <Link to={'/AddTasks'} style={{ color: '#4d0d19', borderColor: 'white', marginTop: 10, marginBottom: 10, marginLeft: 55, textDecoration: "none", display: 'flex', alignItems: 'flex-center', fontFamily: 'Handlee', fontSize: "18px", justifyContent: 'flex-start', width: '100%' }}>
+                <Link to={`/${username}/AddTasks`} style={{ color: '#4d0d19', borderColor: 'white', marginTop: 10, marginBottom: 10, marginLeft: 55, textDecoration: "none", display: 'flex', alignItems: 'flex-center', fontFamily: 'Handlee', fontSize: "18px", justifyContent: 'flex-start', width: '100%' }}>
                     <AddIcon sx={{ color: "#4d0d19" }} />
                     Add Tasks
                 </Link>

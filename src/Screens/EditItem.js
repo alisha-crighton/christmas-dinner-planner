@@ -1,7 +1,7 @@
 import '../Homepage.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button'
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,8 @@ import MinuteInput from './MinuteInput.js'
 function EditItem() {
     
     const location = useLocation();
-    const navigate = useNavigate()
+    const {username} = useParams();
+    const navigate = useNavigate();
     const previousScreen = location.state.from
 
     let item = location.state.item;
@@ -30,14 +31,14 @@ function EditItem() {
     
     
         const fetchDinnerTime = () => {
-                fetch('https://christmas-dinner-planner.onrender.com/dinner_time')
+                fetch(`https://christmas-dinner-planner.onrender.com/dinner_time/${username}`)
                 .then(res => res.json())
                 .then (data =>{setTimeToEat (data)})
                 .catch(err => console.error(err));
             };
 
         const fetchFoodItems = () => {
-                fetch('https://christmas-dinner-planner.onrender.com/food_items')
+                fetch(`https://christmas-dinner-planner.onrender.com/food_items/${username}`)
                 .then(res => res.json())
                 .then(food => setFoodAllItems(food))
                 .catch(err => console.error(err));
@@ -45,7 +46,7 @@ function EditItem() {
         React.useEffect(() => {
             fetchDinnerTime();
             fetchFoodItems();
-        }, []);
+        }, [username]);
 
     const dinnerTimestamp = new Date("December 25, 2025 " + timeToEat[0].dinnerTime).getTime();
         let dinnerTimeMinutes = (new Date (dinnerTimestamp)).getMinutes();
@@ -78,7 +79,7 @@ function EditItem() {
         prepBefore: item.prepBefore
     };
     
-    fetch('https://christmas-dinner-planner.onrender.com/edit_item', {
+    fetch(`https://christmas-dinner-planner.onrender.com/edit_item/${username}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editFoodItem)
@@ -96,7 +97,7 @@ function EditItem() {
 
     // Delete corresponding tasks
     const itemDel = item.title;
-        await fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}`, {
+        await fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}/${username}`, {
             method: "DELETE",
         })
         .then(res => res.json())
@@ -203,7 +204,7 @@ function EditItem() {
         }
 
         for (const task of tasksToAdd) {
-            await fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+            await fetch(`https://christmas-dinner-planner.onrender.com/add_task/${username}`, {
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(task)
@@ -230,14 +231,14 @@ function EditItem() {
 
     const handleDeleteItem = () => {
         const id = item.id;
-        fetch(`https://christmas-dinner-planner.onrender.com/delete_item/${id}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_item/${id}/${username}`, {
             method: "DELETE",
         })
         .then(res => res.json())
         .catch(err => console.error('Problem with deleting food item', err));
 
         const itemDel = item.title;
-        fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_item_task/${encodeURIComponent(itemDel)}/${username}`, {
             method: "DELETE",
         })
         .then(res => res.json())

@@ -1,7 +1,7 @@
 import '../Homepage.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button'
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ function EditTask() {
 
     const navigate = useNavigate()
     const location = useLocation();
+    const {username} = useParams();
 
     const [newTimeStamp, setNewTimeStamp] = React.useState(location.state.task.timeStamp)
     const [newAction, setNewAction] = React.useState(location.state.task.action)
@@ -19,7 +20,7 @@ function EditTask() {
     const [emptyTime, setEmptyTime] = React.useState(false)
 
     const handleSaveEditTask = () => {
-    if (!newAction.trim() && !newTimeStamp.trim()) {
+    if (!newAction.trim() && !newTimeStamp.toString().trim()==='') {
         setEmptyTitle(true);
         setEmptyTime(true);
         return;
@@ -44,7 +45,7 @@ function EditTask() {
         item: null
     };
     
-    fetch('https://christmas-dinner-planner.onrender.com/edit_task', {
+    fetch(`https://christmas-dinner-planner.onrender.com/edit_task/${username}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editTask)
@@ -56,20 +57,20 @@ function EditTask() {
         if (location.state.refreshTasks) {
         location.state.refreshTasks();
         }
-        navigate('/');
+        navigate(`/${username}`);
     })
     .catch(err => console.error ('Error with updating task :', err));
     };
 
     const handleDeleteTask = () => {
         const id = location.state.task.id;
-        fetch(`https://christmas-dinner-planner.onrender.com/delete_task/${id}`, {
+        fetch(`https://christmas-dinner-planner.onrender.com/delete_task/${id}/${username}`, {
             method: "DELETE",
         })
         .then(res => res.json())
         .then (data => {
             console.log('Deleted task: ', data);
-            navigate('/', {state: {refresh: true}})
+            navigate(`/${username}`, {state: {refresh: true}})
         })
         .catch(err => console.error('Problem with deleting task', err));
 
@@ -88,7 +89,7 @@ function EditTask() {
   return (
     <div className="homepage" >
         <div className = "button-row">
-        <Link  to={'/'} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
+        <Link  to={`/${username}`} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
             <ArrowBackIcon sx={{color:"#4d0d19", paddingRight:'7px'}}/>
             Back 
         </Link>

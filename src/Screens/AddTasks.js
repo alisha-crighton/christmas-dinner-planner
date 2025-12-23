@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
@@ -12,7 +12,8 @@ import MinuteInput from './MinuteInput'
 
 function AddTasks() {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {username} = useParams();
     
     const [addTask, setAddTask] = React.useState('')
     const [timeInput, setTimeInput] = React.useState('');
@@ -33,7 +34,7 @@ function AddTasks() {
             setEmptyTitle(false)
             setEmptyTime(false)
         }
-        else { navigate('/'); }
+        else { navigate(`/${username}`); }
     }
 
     const handleAddTask = () => {
@@ -61,7 +62,7 @@ function AddTasks() {
         item: null
     };
     
-    fetch('https://christmas-dinner-planner.onrender.com/add_task', {
+    fetch(`https://christmas-dinner-planner.onrender.com/add_task/${username}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTaskItem)
@@ -72,7 +73,7 @@ function AddTasks() {
     .then(newTask => {
         if (newTask?.timeStamp!==undefined && newTask?.action){
         resetAddTask(); 
-        navigate('/');
+        navigate(`/${username}`);
         } 
         else { console.error('there was an error with task ', newTask)}
     })
@@ -84,7 +85,7 @@ function AddTasks() {
   return (
     <div className="homepage" >
         <div className = "button-row">
-        <Link  to={'/'} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
+        <Link  to={`/${username}`} style={{color:'#4d0d19', borderColor: 'white', marginTop:40, marginLeft:15, textDecoration: "none", display: 'flex', alignItems: 'center', fontFamily: 'Handlee', fontSize:"18px", justifyContent:'flex-start', width:'100%' }}>
             <ArrowBackIcon sx={{color:"#4d0d19", paddingRight:'7px'}}/>
             Back 
         </Link>

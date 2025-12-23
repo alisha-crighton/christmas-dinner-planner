@@ -7,21 +7,27 @@ import AddItems from './Screens/AddItems.js'
 import EditTask from './Screens/EditTask.js'
 import EditDinnerTime from './Screens/EditDinnerTime.js'
 
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+
+function UserWrapper({childre}) {
+  const {username} = useParams();
+  return React.cloneElement(children, { username });
+}
 
 function App() {
 
   return(
   <Router>
     <Routes>
-      <Route path="/" element = {<Homepage />}/>
-      <Route path = "/AllItems" element = {<AllItems />}/>
-      <Route path = "/AddTasks" element = {<AddTasks />}/>
-      <Route path = "/EditItem" element = {<EditItem />}/>
-      <Route path = "/AddItems" element = {<AddItems />}/>
-      <Route path = "/EditTask" element = {<EditTask />}/>
-      <Route path = "/EditDinnerTime" element = {<EditDinnerTime />} />
+      <Route path="/:username" element = {<UserWrapper><Homepage /></UserWrapper>}/>
+      <Route path = "/:username/AllItems" element = {<UserWrapper><AllItems /></UserWrapper>}/>
+      <Route path = "/:username/AddTasks" element = {<UserWrapper><AddTasks /></UserWrapper>}/>
+      <Route path = "/:username/EditItem" element = {<UserWrapper><EditItem /></UserWrapper>}/>
+      <Route path = "/:username/AddItems" element = {<UserWrapper><AddItems /></UserWrapper>}/>
+      <Route path = "/:username/EditTask" element = {<UserWrapper><EditTask /></UserWrapper>}/>
+      <Route path = "/:username/EditDinnerTime" element = {<UserWrapper><EditDinnerTime /></UserWrapper>} />
 
+      <Route path = "/" element = {<Homepage username = "default" /> } />
     </Routes>
   </Router>
   )

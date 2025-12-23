@@ -6,10 +6,12 @@ import EditItem from './Screens/EditItem.js'
 import AddItems from './Screens/AddItems.js'
 import EditTask from './Screens/EditTask.js'
 import EditDinnerTime from './Screens/EditDinnerTime.js'
+import * as React from 'react';
+
 
 import { HashRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 
-function UserWrapper({childre}) {
+function UserWrapper({children}) {
   const {username} = useParams();
   return React.cloneElement(children, { username });
 }

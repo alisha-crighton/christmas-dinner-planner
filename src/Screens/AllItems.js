@@ -46,7 +46,7 @@ function AllItems() {
             </div>
 
             <div className = "notepad-title" style={{fontWeight: "bold", color:'#4d0d19'}}>
-                On {username.charAt(0).toUpperCase + username.slice(1).toLowerCase()}'s plate...
+                On {username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()}'s plate...
             </div>
 
             {foodAllItems.length !== 0 ? 
